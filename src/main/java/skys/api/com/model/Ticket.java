@@ -13,10 +13,10 @@ public class Ticket {
     private Long id;
     @Column(nullable = false, length = 50, name = "type_flight")
     private String type;
-    @Column(nullable = false, name = "date_hour_flight")
-    private Date dateHourFlight;
-    @Column(nullable = false, name = "date_hour_landing")
-    private Date dateHourLanding;
+    @Column(nullable = false, length = 50, name = "date_hour_flight")
+    private String dateHourFlight;
+    @Column(nullable = false, length = 50, name = "date_hour_landing")
+    private String dateHourLanding;
     @OneToOne
     @JoinColumn(nullable = false)
     private Client client;
@@ -25,10 +25,25 @@ public class Ticket {
     private Flight flight;
     @Column(nullable = false)
     private Float price;
-    @Column(nullable = false, length = 100)
+    @Column(nullable = false, length = 50)
     private String status;
 
+    @Transient
+    private Long idClient;
+    @Transient
+    private Long idFlight;
+
     public Ticket() {
+    }
+
+    public Ticket(Flight flight, Client client) {
+        setFlight(flight);
+        setClient(client);
+        setType(flight.getType());
+        setPrice(flight.getPrice());
+        setDateHourFlight(flight.getDateHourFlight());
+        setDateHourLanding(flight.getDateHourLanding());
+        setStatus("reserve");
     }
 
     public Long getId() {
@@ -47,19 +62,19 @@ public class Ticket {
         this.type = type;
     }
 
-    public Date getDateHourFlight() {
+    public String getDateHourFlight() {
         return dateHourFlight;
     }
 
-    public void setDateHourFlight(Date dateHourFlight) {
+    public void setDateHourFlight(String dateHourFlight) {
         this.dateHourFlight = dateHourFlight;
     }
 
-    public Date getDateHourLanding() {
+    public String getDateHourLanding() {
         return dateHourLanding;
     }
 
-    public void setDateHourLanding(Date dateHourLanding) {
+    public void setDateHourLanding(String dateHourLanding) {
         this.dateHourLanding = dateHourLanding;
     }
 
@@ -93,5 +108,21 @@ public class Ticket {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public Long getIdClient() {
+        return idClient;
+    }
+
+    public void setIdClient(Long idClient) {
+        this.idClient = idClient;
+    }
+
+    public Long getIdFlight() {
+        return idFlight;
+    }
+
+    public void setIdFlight(Long idFlight) {
+        this.idFlight = idFlight;
     }
 }

@@ -17,10 +17,10 @@ public class Flight {
     private String to;
     @Column(nullable = false, length = 50, name = "type_flight")
     private String type;
-    @Column(nullable = false, name = "date_hour_flight")
-    private Date dateHourFlight;
-    @Column(nullable = false, name = "date_hour_landing")
-    private Date dateHourLanding;
+    @Column(nullable = false, length = 50, name = "date_hour_flight")
+    private String dateHourFlight;
+    @Column(nullable = false, length = 50, name = "date_hour_landing")
+    private String dateHourLanding;
     @Column(nullable = false)
     private Float duration;
     @Column(nullable = false)
@@ -67,19 +67,19 @@ public class Flight {
         this.type = type;
     }
 
-    public Date getDateHourFlight() {
+    public String getDateHourFlight() {
         return dateHourFlight;
     }
 
-    public void setDateHourFlight(Date dateHourFlight) {
+    public void setDateHourFlight(String dateHourFlight) {
         this.dateHourFlight = dateHourFlight;
     }
 
-    public Date getDateHourLanding() {
+    public String getDateHourLanding() {
         return dateHourLanding;
     }
 
-    public void setDateHourLanding(Date dateHourLanding) {
+    public void setDateHourLanding(String dateHourLanding) {
         this.dateHourLanding = dateHourLanding;
     }
 
