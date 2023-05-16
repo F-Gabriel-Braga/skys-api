@@ -31,9 +31,7 @@ public class TokenFilter extends OncePerRequestFilter {
             filterChain.doFilter(request, response);
             return;
         }
-
         String token = this.extractToken(request);
-
         if(!this.tokenService.validateToken(token)) {
             filterChain.doFilter(request, response);
             return;
@@ -47,11 +45,11 @@ public class TokenFilter extends OncePerRequestFilter {
 
     private String extractToken(HttpServletRequest request) {
         String header = request.getHeader("Authorization");
-        return header.substring(7);
+        return header.replace("Bearer ", "");
     }
 
     private boolean validateHeader(HttpServletRequest request) {
         String header = request.getHeader("Authorization");
-        return header != null && header.startsWith("Bearer");
+        return header != null && header.startsWith("Bearer ");
     }
 }
