@@ -5,5 +5,4 @@ import org.springframework.stereotype.Repository;
 import skys.api.com.model.Ticket;
 
 @Repository
-public interface TicketRepository extends JpaRepository<Ticket, Long> {
-}
+public interface TicketRepository extends JpaRepository<Ticket, Long> { }

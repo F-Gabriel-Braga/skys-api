@@ -33,9 +33,4 @@ public class ClientController {
             return null;
         }
     }
-
-    @PostMapping
-    public Client create(@RequestBody Client client) {
-        return clientRepository.save(client);
-    }
 }
