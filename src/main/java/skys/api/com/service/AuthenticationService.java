@@ -5,7 +5,11 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import skys.api.com.model.Client;
 import skys.api.com.repository.ClientRepository;
+import skys.api.com.security.UserSecurity;
+
+import java.util.Optional;
 
 @Service
 public class AuthenticationService implements UserDetailsService {
@@ -15,6 +19,17 @@ public class AuthenticationService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return clientRepository.findByEmail(username);
+        Optional<Client> client = this.clientRepository.findByEmail(username);
+
+        if(client.isPresent()) {
+            UserSecurity userSecurity = new UserSecurity();
+            userSecurity.setId(client.get().getId());
+            userSecurity.setEmail(client.get().getEmail());
+            userSecurity.setPassword(client.get().getPassword());
+            return userSecurity;
+        }
+        else {
+            throw new RuntimeException();
+        }
     }
 }

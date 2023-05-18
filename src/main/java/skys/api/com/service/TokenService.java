@@ -6,6 +6,7 @@ import com.auth0.jwt.exceptions.JWTVerificationException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import skys.api.com.model.Client;
+import skys.api.com.security.UserSecurity;
 
 import java.util.Date;
 
@@ -18,10 +19,10 @@ public class TokenService {
     @Value("${validate-jwt}")
     private Long validateJwt;
 
-    public String generateToken(Client client) {
+    public String generateToken(UserSecurity user) {
         return JWT.create()
-                .withSubject(client.getEmail())
-                .withClaim("id", client.getId())
+                .withSubject(user.getEmail())
+                .withClaim("id", user.getId())
                 .withExpiresAt(new Date(System.currentTimeMillis() + this.validateJwt))
                 .sign(Algorithm.HMAC512(this.secretJwt));
     }

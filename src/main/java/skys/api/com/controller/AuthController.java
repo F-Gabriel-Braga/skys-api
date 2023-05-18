@@ -13,6 +13,7 @@ import skys.api.com.dto.Credentials;
 import skys.api.com.dto.Token;
 import skys.api.com.model.Client;
 import skys.api.com.repository.ClientRepository;
+import skys.api.com.security.UserSecurity;
 import skys.api.com.service.TokenService;
 
 @RestController
@@ -35,8 +36,8 @@ public class AuthController {
     public Token signin(@RequestBody Credentials credentials) {
         UsernamePasswordAuthenticationToken user = new UsernamePasswordAuthenticationToken(credentials.getEmail(), credentials.getPassword());
         Authentication authentication = this.authenticationManager.authenticate(user);
-        Client client = (Client) authentication.getPrincipal();
-        return new Token(tokenService.generateToken(client));
+        UserSecurity userSecurity = (UserSecurity) authentication.getPrincipal();
+        return new Token(tokenService.generateToken(userSecurity));
     }
 
     @PostMapping(value = "/signup")

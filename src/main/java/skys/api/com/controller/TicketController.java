@@ -35,6 +35,12 @@ public class TicketController {
         return ticket.orElseThrow(() -> new IllegalStateException("Ticket não encontrado!"));
     }
 
+    @GetMapping(value = "/client/{idClient}")
+    public List<Ticket> findReservesByIdClient(@PathVariable Long idClient) {
+        List<Ticket> tickets = ticketRepository.findReservesByIdClient(idClient);
+        return tickets;
+    }
+
     @PostMapping
     public Ticket create(@RequestBody Ticket ticket) {
         Long idFlight = ticket.getIdFlight();
