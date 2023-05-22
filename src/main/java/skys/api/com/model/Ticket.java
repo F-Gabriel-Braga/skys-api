@@ -46,6 +46,11 @@ public class Ticket {
         setStatus("reserve");
     }
 
+    public Ticket(Long idClient, Long idFlight) {
+        this.idClient = idClient;
+        this.idFlight = idFlight;
+    }
+
     public Long getId() {
         return id;
     }

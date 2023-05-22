@@ -35,6 +35,19 @@ public class Flight {
     public Flight() {
     }
 
+    public Flight(int capacity, String company, String dateHourFlight, String dateHourLanding, float duration, String valueFrom, float price, String status, String valueTo, String typeFlight) {
+        this.capacity = capacity;
+        this.company = company;
+        this.dateHourFlight = dateHourFlight;
+        this.dateHourLanding = dateHourLanding;
+        this.duration = duration;
+        this.from = valueFrom;
+        this.price = price;
+        this.status = status;
+        this.to = valueTo;
+        this.type = typeFlight;
+    }
+
     public Long getId() {
         return id;
     }

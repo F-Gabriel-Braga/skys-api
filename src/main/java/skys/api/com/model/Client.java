@@ -31,6 +31,15 @@ public class Client {
     public Client() {
     }
 
+    public Client(String cpf, String email, String firstName, String lastName, String password, String phone) {
+        this.cpf = cpf;
+        this.email = email;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.password = password;
+        this.phone = phone;
+    }
+
     public Long getId() {
         return id;
     }
