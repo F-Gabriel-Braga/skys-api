@@ -17,10 +17,10 @@ public class Ticket {
     private String dateHourFlight;
     @Column(nullable = false, length = 50, name = "date_hour_landing")
     private String dateHourLanding;
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(nullable = false)
     private Client client;
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(nullable = false)
     private Flight flight;
     @Column(nullable = false)
