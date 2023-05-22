@@ -12,4 +12,7 @@ public interface TicketRepository extends JpaRepository<Ticket, Long> {
 
     @Query(value = "SELECT * FROM tickets WHERE status = 'reserve' AND client_id = :idClient", nativeQuery = true)
     List<Ticket> findReservesByIdClient(Long idClient);
+
+    @Query(value = "SELECT * FROM tickets WHERE status = 'travel' AND client_id = :idClient", nativeQuery = true)
+    List<Ticket> findTravelsByIdClient(Long idClient);
 }

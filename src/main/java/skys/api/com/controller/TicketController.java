@@ -35,9 +35,15 @@ public class TicketController {
         return ticket.orElseThrow(() -> new IllegalStateException("Ticket não encontrado!"));
     }
 
-    @GetMapping(value = "/client/{idClient}")
+    @GetMapping(value = "/reserves/{idClient}")
     public List<Ticket> findReservesByIdClient(@PathVariable Long idClient) {
         List<Ticket> tickets = ticketRepository.findReservesByIdClient(idClient);
+        return tickets;
+    }
+
+    @GetMapping(value = "/travels/{idClient}")
+    public List<Ticket> findTravelsByIdClient(@PathVariable Long idClient) {
+        List<Ticket> tickets = ticketRepository.findTravelsByIdClient(idClient);
         return tickets;
     }
 
