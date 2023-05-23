@@ -47,6 +47,11 @@ public class TicketController {
         return tickets;
     }
 
+    @PostMapping(value = "/reserves/finalize/{id}")
+    public void finalizeReserveById(@PathVariable Long id) {
+        ticketRepository.updateTicketStatusTravel(id);
+    }
+
     @PostMapping
     public Ticket create(@RequestBody Ticket ticket) {
         Long idFlight = ticket.getIdFlight();
