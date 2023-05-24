@@ -32,6 +32,12 @@ public class FlightController {
         }
     }
 
+    @PostMapping(value = "/filter")
+    public List<Flight> findWithFilter(@RequestBody Flight flight) {
+        List<Flight> flights = flightRepository.findWithFilter(flight.getDateHourFlight(), flight.getFrom(), flight.getTo());
+        return flights;
+    }
+
     @PostMapping
     public Flight create(@RequestBody Flight flight) {
         Flight result = flightRepository.save(flight);
