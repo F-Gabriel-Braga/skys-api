@@ -43,4 +43,9 @@ public class FlightController {
         Flight result = flightRepository.save(flight);
         return result;
     }
+
+    @DeleteMapping(value = "/{id}")
+    public void delete(@PathVariable Long id) {
+        flightRepository.deleteById(id);
+    }
 }
