@@ -1,6 +1,7 @@
 package skys.api.com.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import skys.api.com.model.Client;
 import skys.api.com.service.ClientService;
@@ -15,12 +16,14 @@ public class ClientController {
     private ClientService clientService;
 
     @GetMapping
-    public List<Client> findAll() {
-        return clientService.findAll();
+    public ResponseEntity<List<Client>> findAll() {
+        List<Client> clients = clientService.findAll();
+        return ResponseEntity.status(200).body(clients);
     }
 
     @GetMapping(value = "/{id}")
-    public Client findById(@PathVariable Long id) {
-        return clientService.findById(id);
+    public ResponseEntity<Client> findById(@PathVariable Long id) {
+        Client client = clientService.findById(id);
+        return ResponseEntity.status(200).body(client);
     }
 }

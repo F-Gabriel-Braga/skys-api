@@ -1,6 +1,7 @@
 package skys.api.com.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -8,22 +9,24 @@ import org.springframework.web.bind.annotation.RestController;
 import skys.api.com.dto.Credentials;
 import skys.api.com.dto.Token;
 import skys.api.com.model.Client;
-import skys.api.com.service.AuthenticationService;
+import skys.api.com.service.AuthService;
 
 @RestController
 @RequestMapping(value = "/auth")
 public class AuthController {
 
     @Autowired
-    private AuthenticationService authenticationService;
+    private AuthService authService;
 
     @PostMapping(value = "/signin")
-    public Token signin(@RequestBody Credentials credentials) {
-        return authenticationService.signin(credentials);
+    public ResponseEntity<Token> signin(@RequestBody Credentials credentials) {
+        Token token = authService.signin(credentials);
+        return ResponseEntity.status(200).body(token);
     }
 
     @PostMapping(value = "/signup")
-    public Client signup(@RequestBody Client client) {
-        return authenticationService.signup(client);
+    public ResponseEntity<Client> signup(@RequestBody Client client) {
+        Client clientSaved = authService.signup(client);
+        return ResponseEntity.status(201).body(clientSaved);
     }
 }

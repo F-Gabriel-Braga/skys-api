@@ -1,6 +1,7 @@
 package skys.api.com.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import skys.api.com.model.Client;
 import skys.api.com.model.Flight;
@@ -21,37 +22,44 @@ public class TicketController {
     private TicketService ticketService;
 
     @GetMapping
-    public List<Ticket> findAll() {
-        return ticketService.findAll();
+    public ResponseEntity<List<Ticket>> findAll() {
+        List<Ticket> tickets = ticketService.findAll();
+        return ResponseEntity.status(200).body(tickets);
     }
 
     @GetMapping(value = "/{id}")
-    public Ticket findById(@PathVariable Long id) {
-        return ticketService.findById(id);
+    public ResponseEntity<Ticket> findById(@PathVariable Long id) {
+        Ticket ticket = ticketService.findById(id);
+        return ResponseEntity.status(200).body(ticket);
     }
 
     @GetMapping(value = "/reserves/{idClient}")
-    public List<Ticket> findReservesByIdClient(@PathVariable Long idClient) {
-        return ticketService.findReservesByIdClient(idClient);
+    public ResponseEntity<List<Ticket>> findReservesByIdClient(@PathVariable Long idClient) {
+        List<Ticket> tickets = ticketService.findReservesByIdClient(idClient);
+        return ResponseEntity.status(200).body(tickets);
     }
 
     @GetMapping(value = "/travels/{idClient}")
-    public List<Ticket> findTravelsByIdClient(@PathVariable Long idClient) {
-        return ticketService.findTravelsByIdClient(idClient);
-    }
-
-    @PostMapping(value = "/reserves/finalize/{id}")
-    public void finalizeReserveById(@PathVariable Long id) {
-        ticketService.finalizeReserveById(id);
+    public ResponseEntity<List<Ticket>> findTravelsByIdClient(@PathVariable Long idClient) {
+        List<Ticket> tickets = ticketService.findTravelsByIdClient(idClient);
+        return ResponseEntity.status(200).body(tickets);
     }
 
     @PostMapping
-    public Ticket create(@RequestBody Ticket ticket) {
-        return ticketService.create(ticket);
+    public ResponseEntity<Ticket> create(@RequestBody Ticket ticket) {
+        Ticket ticketSaved = ticketService.create(ticket);
+        return ResponseEntity.status(201).body(ticketSaved);
+    }
+
+    @PostMapping(value = "/reserves/finalize/{id}")
+    public ResponseEntity<Long> finalizeReserveById(@PathVariable Long id) {
+        ticketService.finalizeReserveById(id);
+        return ResponseEntity.status(200).body(id);
     }
 
     @DeleteMapping(value = "/{id}")
-    public void delete(@PathVariable Long id) {
+    public ResponseEntity<Long> delete(@PathVariable Long id) {
         ticketService.delete(id);
+        return ResponseEntity.status(204).body(id);
     }
 }
