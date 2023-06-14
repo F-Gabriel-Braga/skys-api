@@ -8,6 +8,7 @@ import skys.api.com.model.Ticket;
 import skys.api.com.repository.ClientRepository;
 import skys.api.com.repository.FlightRepository;
 import skys.api.com.repository.TicketRepository;
+import skys.api.com.service.TicketService;
 
 import java.util.List;
 import java.util.Optional;
@@ -17,57 +18,40 @@ import java.util.Optional;
 public class TicketController {
 
     @Autowired
-    private TicketRepository ticketRepository;
-    @Autowired
-    private FlightRepository flightRepository;
-    @Autowired
-    private ClientRepository clientRepository;
+    private TicketService ticketService;
 
     @GetMapping
     public List<Ticket> findAll() {
-        List<Ticket> tickets = ticketRepository.findAll();
-        return tickets;
+        return ticketService.findAll();
     }
 
     @GetMapping(value = "/{id}")
     public Ticket findById(@PathVariable Long id) {
-        Optional<Ticket> ticket = ticketRepository.findById(id);
-        return ticket.orElseThrow(() -> new IllegalStateException("Ticket não encontrado!"));
+        return ticketService.findById(id);
     }
 
     @GetMapping(value = "/reserves/{idClient}")
     public List<Ticket> findReservesByIdClient(@PathVariable Long idClient) {
-        List<Ticket> tickets = ticketRepository.findReservesByIdClient(idClient);
-        return tickets;
+        return ticketService.findReservesByIdClient(idClient);
     }
 
     @GetMapping(value = "/travels/{idClient}")
     public List<Ticket> findTravelsByIdClient(@PathVariable Long idClient) {
-        List<Ticket> tickets = ticketRepository.findTravelsByIdClient(idClient);
-        return tickets;
+        return ticketService.findTravelsByIdClient(idClient);
     }
 
     @PostMapping(value = "/reserves/finalize/{id}")
     public void finalizeReserveById(@PathVariable Long id) {
-        ticketRepository.updateTicketStatusTravel(id);
+        ticketService.finalizeReserveById(id);
     }
 
     @PostMapping
     public Ticket create(@RequestBody Ticket ticket) {
-        Long idFlight = ticket.getIdFlight();
-        Long idClient = ticket.getIdClient();
-        Optional<Flight> flight = flightRepository.findById(idFlight);
-        Optional<Client> client = clientRepository.findById(idClient);
-        if(flight.isPresent() && client.isPresent()) {
-            ticket = new Ticket(flight.get(), client.get());
-            Ticket result = ticketRepository.save(ticket);
-            return result;
-        }
-        return null;
+        return ticketService.create(ticket);
     }
 
     @DeleteMapping(value = "/{id}")
     public void delete(@PathVariable Long id) {
-        ticketRepository.deleteById(id);
+        ticketService.delete(id);
     }
 }
