@@ -88,9 +88,11 @@
 				<configuration>
 					<skip>false</skip>
 					<rules>
-						<element>CLASS</element>
 						<rule>
-							<exclude>*Test</exclude>
+							<element>CLASS</element>
+							<excludes>
+								<exclude>*Test</exclude>
+							</excludes>
 						</rule>
 					</rules>
 				</configuration>

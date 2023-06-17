@@ -51,6 +51,16 @@ public class Ticket {
         this.idFlight = idFlight;
     }
 
+    public Ticket(String type, String dateHourFlight, String dateHourLanding, Client client, Flight flight, Float price, String status) {
+        this.type = type;
+        this.dateHourFlight = dateHourFlight;
+        this.dateHourLanding = dateHourLanding;
+        this.client = client;
+        this.flight = flight;
+        this.price = price;
+        this.status = status;
+    }
+
     public Long getId() {
         return id;
     }

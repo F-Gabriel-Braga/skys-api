@@ -36,9 +36,9 @@ public class ClientControllerTest {
     @Test
     public void returnSuccess_FindById() {
         String tokenValid = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJnYWJyaWVsQGV4YW1wbGUuY29tIiwiaWQiOjEsImV4cCI6MTY4OTMzMzkzN30.FrAE1ASGbFcuoL2WaIaZ0njAcpF4mEY3z0405WTUmZzkHpepA4OMTnKMqhqJM9I7bp1HfP-d9IhceRwI4KbuVQ";
-        Client client1 = new Client("12345678901", "gabriel@example.com", "Gabriel", "Braga", "123456", "1234567890");
-        client1.setId(1L);
-        Mockito.when(this.clientService.findById(1L)).thenReturn(client1);
+        Client client = new Client("12345678901", "gabriel@example.com", "Gabriel", "Braga", "123456", "1234567890");
+        client.setId(1L);
+        Mockito.when(this.clientService.findById(1L)).thenReturn(client);
         given().mockMvc(mockMvc)
                 .accept(ContentType.JSON)
                 .header("Authorization", tokenValid)
@@ -47,14 +47,16 @@ public class ClientControllerTest {
     }
 
     @Test
-    public void returnNotFound_FindById() {
-        String tokenValid = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJnYWJyaWVsQGV4YW1wbGUuY29tIiwiaWQiOjEsImV4cCI6MTY4OTMzMzkzN30.FrAE1ASGbFcuoL2WaIaZ0njAcpF4mEY3z0405WTUmZzkHpepA4OMTnKMqhqJM9I7bp1HfP-d9IhceRwI4KbuVQ";
-        Mockito.when(this.clientService.findById(9L)).thenReturn(null);
+    public void returnError_FindById_TokenInvalid() {
+        String tokenInvalid = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjkhg5jkh4jk5hjk4ImV4cCI6MTY4OTMzMzkzN30.FrAE1ASGbFcuoL2WaIaZ0njAcpF4mEY3z0405WTUmZzkHpepA4OMTnKMqhqJM9I7bp1HfP-d9IhceRwI4KbuVQ";
+        Client client1 = new Client("12345678901", "gabriel@example.com", "Gabriel", "Braga", "123456", "1234567890");
+        client1.setId(1L);
+        Mockito.when(this.clientService.findById(1L)).thenReturn(client1);
         given().mockMvc(mockMvc)
                 .accept(ContentType.JSON)
-                .header("Authorization", tokenValid)
+                .header("Authorization", tokenInvalid)
                 .when().get("/clients/{id}", 1L)
-                .then().statusCode(HttpStatus.NOT_FOUND.value());
+                .then().statusCode(HttpStatus.FORBIDDEN.value());
     }
 
 }
