@@ -26,7 +26,7 @@ Além disso, você precisará configurar as seguintes variáveis de ambiente:
 ## Executando a API
 Após configurar o ambiente e o banco de dados, siga as etapas abaixo para executar a Skys API:
 1. Clone o repositório para sua máquina local.
-`git clone https://github.com/seu-usuario/skys-api.git`
+`git clone https://github.com/f-gabriel-braga/skys-api.git`
 2. Acesse o diretório do projeto.
 `cd skys-api`
 3. Compile o projeto usando o Maven.
